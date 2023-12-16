@@ -3,17 +3,20 @@ import 'dart:ui';
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mobile/mainsc.dart';
+import 'package:mobile/viewmodel/fetch_gunung.dart';
+import 'package:mobile/views/mainsc.dart';
 
 class Profile extends StatelessWidget {
   const Profile({super.key});
 
   @override
   Widget build(BuildContext context) {
+    Repository repo = Repository();
+    final int _botnavInd = 1;
     List<IconData> iconList = [
       Icons.home_outlined,
-      Icons.favorite_outline,
-      Icons.calendar_month_outlined,
+      // Icons.favorite_outline,
+      // Icons.calendar_month_outlined,
       Icons.person_3_outlined,
     ];
     return Scaffold(
@@ -196,158 +199,158 @@ class Profile extends StatelessWidget {
                     ],
                   ),
                 ),
-                Stack(
-                  alignment: Alignment.bottomCenter,
-                  children: [
-                    Container(
-                      alignment: Alignment.bottomCenter,
-                      width: double.infinity,
-                      height: 140,
-                      margin: EdgeInsets.only(top: 32),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(
-                                  'https://images.pexels.com/photos/2603681/pexels-photo-2603681.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'))),
-                    ),
-                    BackdropFilter(
-                      filter: ImageFilter.blur(),
-                      child: Container(
-                        margin: EdgeInsets.only(top: 32),
-                        width: double.infinity,
-                        height: 28,
-                        decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.5),
-                            borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(20),
-                                bottomRight: Radius.circular(20))),
-                        child: Row(
-                          children: [
-                            Container(
-                                padding: EdgeInsets.only(left: 32),
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      padding:
-                                          EdgeInsets.only(right: 6, bottom: 2),
-                                      child: Icon(
-                                        Icons.location_on_outlined,
-                                        size: 14,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                    Text(
-                                      'Ala-archa',
-                                      style: GoogleFonts.poppins(
-                                          color: Colors.white),
-                                    )
-                                  ],
-                                )),
-                            Container(
-                                padding: EdgeInsets.only(
-                                  left: 24,
+                Container(
+                  height: 360,
+                  // color: Colors.amber,
+                  child: FutureBuilder<List<dynamic>>(
+                    future: repo.fetchData(),
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      if (snapshot.hasData) {
+                        return ListView.builder(
+                          itemCount: 2,
+                          itemBuilder: (BuildContext context, int index) {
+                            var gunung = snapshot.data![index];
+                            return Stack(
+                              alignment: Alignment.bottomCenter,
+                              children: [
+                                Container(
+                                  alignment: Alignment.bottomCenter,
+                                  width: double.infinity,
+                                  height: 140,
+                                  margin: EdgeInsets.only(top: 10),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      image: DecorationImage(
+                                          fit: BoxFit.cover,
+                                          image: NetworkImage(gunung.img))),
                                 ),
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      padding:
-                                          EdgeInsets.only(right: 6, bottom: 2),
-                                      child: Icon(
-                                        Icons.calendar_month_outlined,
-                                        size: 14,
-                                        color: Colors.white,
-                                      ),
+                                BackdropFilter(
+                                  filter: ImageFilter.blur(),
+                                  child: Container(
+                                    margin: EdgeInsets.only(top: 32),
+                                    width: double.infinity,
+                                    height: 28,
+                                    decoration: BoxDecoration(
+                                        color: Colors.white.withOpacity(0.5),
+                                        borderRadius: BorderRadius.only(
+                                            bottomLeft: Radius.circular(20),
+                                            bottomRight: Radius.circular(20))),
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          padding: EdgeInsets.only(left: 32),
+                                          child: Row(
+                                            children: [
+                                              Container(
+                                                padding: EdgeInsets.only(
+                                                    right: 6, bottom: 2),
+                                                child: Icon(
+                                                  Icons.location_on_outlined,
+                                                  size: 14,
+                                                  color: Colors.grey.shade800,
+                                                ),
+                                              ),
+                                              Text(
+                                                gunung.nama,
+                                                style: GoogleFonts.poppins(
+                                                  color: Colors.grey.shade800,
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                    Text(
-                                      'June 28',
-                                      style: GoogleFonts.poppins(
-                                          color: Colors.white),
-                                    )
-                                  ],
-                                )),
-                          ],
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-                Stack(
-                  alignment: Alignment.bottomCenter,
-                  children: [
-                    Container(
-                      alignment: Alignment.bottomCenter,
-                      width: double.infinity,
-                      height: 140,
-                      margin: EdgeInsets.only(top: 32),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(
-                                  'https://images.pexels.com/photos/4314203/pexels-photo-4314203.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'))),
-                    ),
-                    BackdropFilter(
-                      filter: ImageFilter.blur(),
-                      child: Container(
-                        margin: EdgeInsets.only(top: 32),
-                        width: double.infinity,
-                        height: 28,
-                        decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.5),
-                            borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(20),
-                                bottomRight: Radius.circular(20))),
-                        child: Row(
-                          children: [
-                            Container(
-                                padding: EdgeInsets.only(left: 32),
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      padding:
-                                          EdgeInsets.only(right: 6, bottom: 2),
-                                      child: Icon(
-                                        Icons.location_on_outlined,
-                                        size: 14,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                    Text(
-                                      'Batken',
-                                      style: GoogleFonts.poppins(
-                                          color: Colors.white),
-                                    )
-                                  ],
-                                )),
-                            Container(
-                                padding: EdgeInsets.only(
-                                  left: 24,
+                                  ),
                                 ),
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      padding:
-                                          EdgeInsets.only(right: 6, bottom: 2),
-                                      child: Icon(
-                                        Icons.calendar_month_outlined,
-                                        size: 14,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                    Text(
-                                      'June 18',
-                                      style: GoogleFonts.poppins(
-                                          color: Colors.white),
-                                    )
-                                  ],
-                                )),
-                          ],
-                        ),
-                      ),
-                    )
-                  ],
-                ),
+                              ],
+                            );
+                          },
+                        );
+                      } else {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                    },
+                  ),
+                )
+                // Stack(
+                //   alignment: Alignment.bottomCenter,
+                //   children: [
+                //     Container(
+                //       alignment: Alignment.bottomCenter,
+                //       width: double.infinity,
+                //       height: 140,
+                //       margin: EdgeInsets.only(top: 32),
+                //       decoration: BoxDecoration(
+                //           borderRadius: BorderRadius.circular(20),
+                //           image: DecorationImage(
+                //               fit: BoxFit.cover,
+                //               image: NetworkImage(
+                //                   'https://images.pexels.com/photos/4314203/pexels-photo-4314203.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'))),
+                //     ),
+                //     BackdropFilter(
+                //       filter: ImageFilter.blur(),
+                //       child: Container(
+                //         margin: EdgeInsets.only(top: 32),
+                //         width: double.infinity,
+                //         height: 28,
+                //         decoration: BoxDecoration(
+                //             color: Colors.white.withOpacity(0.5),
+                //             borderRadius: BorderRadius.only(
+                //                 bottomLeft: Radius.circular(20),
+                //                 bottomRight: Radius.circular(20))),
+                //         child: Row(
+                //           children: [
+                //             Container(
+                //                 padding: EdgeInsets.only(left: 32),
+                //                 child: Row(
+                //                   children: [
+                //                     Container(
+                //                       padding:
+                //                           EdgeInsets.only(right: 6, bottom: 2),
+                //                       child: Icon(
+                //                         Icons.location_on_outlined,
+                //                         size: 14,
+                //                         color: Colors.white,
+                //                       ),
+                //                     ),
+                //                     Text(
+                //                       'Batken',
+                //                       style: GoogleFonts.poppins(
+                //                           color: Colors.white),
+                //                     )
+                //                   ],
+                //                 )),
+                //             Container(
+                //                 padding: EdgeInsets.only(
+                //                   left: 24,
+                //                 ),
+                //                 child: Row(
+                //                   children: [
+                //                     Container(
+                //                       padding:
+                //                           EdgeInsets.only(right: 6, bottom: 2),
+                //                       child: Icon(
+                //                         Icons.calendar_month_outlined,
+                //                         size: 14,
+                //                         color: Colors.white,
+                //                       ),
+                //                     ),
+                //                     Text(
+                //                       'June 18',
+                //                       style: GoogleFonts.poppins(
+                //                           color: Colors.white),
+                //                     )
+                //                   ],
+                //                 )),
+                //           ],
+                //         ),
+                //       ),
+                //     )
+                //   ],
+                // ),
               ],
             ),
           )
@@ -360,19 +363,38 @@ class Profile extends StatelessWidget {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: AnimatedBottomNavigationBar(
-        activeColor: Colors.blue,
         icons: iconList,
-        activeIndex: 3,
-        onTap: (p0) {
-          Navigator.push(context, MaterialPageRoute(
-            builder: (context) {
-              return MainScreen();
-            },
-          ));
-        },
-        gapLocation: GapLocation.center,
+        activeIndex: _botnavInd,
         leftCornerRadius: 32,
         rightCornerRadius: 32,
+        onTap: (int index) {
+          switch (index) {
+            case 0:
+              Navigator.pushReplacement(context, MaterialPageRoute(
+                builder: (context) {
+                  return MainScreen();
+                },
+              ));
+              break;
+            // case 1:
+            //   Navigator.pushReplacement(context, MaterialPageRoute(
+            //     builder: (context) {
+            //       return SortPage();
+            //     },
+            //   ));
+            //   break;
+            // case 2:
+            //   Navigator.pushReplacement(context, MaterialPageRoute(
+            //     builder: (context) {
+            //       return Profile();
+            //     },
+            //   ));
+            //   break;
+            default:
+          }
+        },
+        gapLocation: GapLocation.none,
+        activeColor: Colors.blue,
       ),
     );
   }
